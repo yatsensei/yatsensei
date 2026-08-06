@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Akein Tsung — Portfolio</title>
+<title>Akein Tsung's Portfolio</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="images/icon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -198,7 +201,35 @@
     padding:9px 14px 9px 18px;
     border-right:1px solid var(--border);
     margin-right:4px;
+    display:flex;
+    align-items:center;
   }
+
+  /* ============ LOGO MARK ============ */
+  /* The gradient stops read the same --accent / --accent-2 the scroll spy
+     rewrites per section, so the mark recolours as the page moves. The W is
+     var(--text) and the canvas is transparent, so it sits on whatever is behind it. */
+  .logo-mark{
+    width:1.25rem;
+    height:1.25rem;
+    display:block;
+    overflow:visible;
+  }
+  .logo-mark .logo-w{
+    fill:none;
+    stroke:var(--text);
+    stroke-width:11;
+    stroke-linejoin:miter;
+  }
+  .logo-mark .logo-t{ fill:url(#logoGrad); }
+  .logo-mark .logo-a{
+    fill:none;
+    stroke:url(#logoGrad);
+    stroke-width:8;
+    stroke-linejoin:miter;
+  }
+  .logo-stop-a{ stop-color:var(--accent); transition:stop-color 0.8s var(--ease); }
+  .logo-stop-b{ stop-color:var(--accent-2, var(--teal)); transition:stop-color 0.8s var(--ease); }
   /* 7 labelled links no longer fit a tablet viewport, so labels collapse at the
      same 860px breakpoint the hero and projects grids already use */
   @media (max-width:860px){
@@ -722,7 +753,18 @@
 <div class="cursor-glow" id="cursorGlow"></div>
 
 <nav id="siteNav">
-  <span class="nav-name">AT</span>
+  <span class="nav-name">
+    <svg class="logo-mark" viewBox="0 0 100 100" role="img" aria-label="Akein Tsung">
+      <title>Akein Tsung</title>
+      <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop class="logo-stop-a" offset="0%"></stop>
+        <stop class="logo-stop-b" offset="100%"></stop>
+      </linearGradient>
+      <path class="logo-w" d="M6 21 L32 87 L50 42 L68 87 L94 21"></path>
+      <path class="logo-t" d="M13 6 H87 L80 19 H55.5 V34 H44.5 V19 H13 Z"></path>
+      <path class="logo-a" d="M42 88 L50 70 L58 88"></path>
+    </svg>
+  </span>
   <a href="#about" class="nav-link"><span class="nav-label">About</span></a>
   <a href="#projects" class="nav-link"><span class="nav-label">Projects</span></a>
   <a href="#experience" class="nav-link"><span class="nav-label">Experience</span></a>
