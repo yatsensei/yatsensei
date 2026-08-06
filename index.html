@@ -490,12 +490,14 @@
   }
 
   .project-visual{
+    display:block;   /* it is an <a> so the full-size image can be opened */
     aspect-ratio:4/3;
     border-radius:18px;
     position:relative;
     overflow:hidden;
     background:var(--surface);
     border:1px solid var(--border);
+    cursor:zoom-in;
   }
   .project-visual .glow-blob{
     position:absolute;
@@ -827,13 +829,14 @@
     </div>
 
     <div class="project reveal" style="--proj-color: var(--indigo);">
-      <div class="project-visual">
+      <a class="project-visual" href="images/project-01-mlops-pipeline.jpg" target="_blank" rel="noopener noreferrer"
+         aria-label="Open the full-size screenshot">
         <div class="glow-blob"></div>
         <img src="images/project-01-mlops-pipeline.jpg"
              alt="End-to-End MLOps Pipeline: the FastAPI prediction service and MLflow experiment tracking dashboard"
              width="1200" height="900" loading="lazy" decoding="async">
         <span class="visual-tag">GITHUB REPOSITORY</span>
-      </div>
+      </a>
       <div>
         <div class="project-index">Project 01</div>
         <h3>End-to-End MLOps Pipeline</h3>
@@ -849,13 +852,14 @@
     </div>
 
     <div class="project reveal" style="--proj-color: var(--teal);">
-      <div class="project-visual">
+      <a class="project-visual" href="images/project-02-atliq-rag-chatbot.jpg" target="_blank" rel="noopener noreferrer"
+         aria-label="Open the full-size screenshot">
         <div class="glow-blob"></div>
         <img src="images/project-02-atliq-rag-chatbot.jpg"
              alt="AtliQ RAG Chatbot: the Streamlit chat interface answering an internal knowledge base question"
              width="1200" height="900" loading="lazy" decoding="async">
         <span class="visual-tag">GITHUB REPOSITORY</span>
-      </div>
+      </a>
       <div>
         <div class="project-index">Project 02</div>
         <h3>AtliQ RAG Chatbot</h3>
@@ -871,13 +875,14 @@
     </div>
 
     <div class="project reveal" style="--proj-color: var(--amber);">
-      <div class="project-visual">
+      <a class="project-visual" href="images/project-03-multi-agent-code-reviewer.jpg" target="_blank" rel="noopener noreferrer"
+         aria-label="Open the full-size screenshot">
         <div class="glow-blob"></div>
         <img src="images/project-03-multi-agent-code-reviewer.jpg"
              alt="Multi-Agent Code Reviewer: the LangGraph fan-out/fan-in review pipeline and its merged review output"
              width="1200" height="900" loading="lazy" decoding="async">
         <span class="visual-tag">GITHUB REPOSITORY</span>
-      </div>
+      </a>
       <div>
         <div class="project-index">Project 03</div>
         <h3>Multi-Agent Code Reviewer</h3>
