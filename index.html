@@ -614,7 +614,9 @@
   }
   .contact-card p{ color:var(--muted); position:relative; margin-bottom:40px; }
 
-  .contact-email-btn{ position:relative; margin-bottom:36px; }
+  /* min-width is the natural width of "Email me →", so swapping in the shorter
+     "Copied ✓" confirmation never resizes the button */
+  .contact-email-btn{ position:relative; margin-bottom:36px; min-width:7.95rem; justify-content:center; }
 
   .contact-tabs{
     position:relative;
@@ -1161,6 +1163,54 @@
     eraseRole(() => typeRole(roles[roleIdx], cycleRoles));
   }
   setTimeout(() => eraseRole(() => { roleIdx = 1; typeRole(roles[roleIdx], cycleRoles); }), 2200);
+
+  // ---------- Email button ----------
+  // The mailto still fires normally. This only covers visitors whose device has
+  // no mail client registered, where the click would otherwise do nothing at all:
+  // the address goes to their clipboard and the button says so.
+  const emailBtn = document.querySelector('.contact-email-btn');
+  if (emailBtn){
+    const address = emailBtn.getAttribute('href').replace(/^mailto:/, '');
+    const defaultLabel = emailBtn.textContent;
+    let restoreTimer;
+
+    function copyAddress(){
+      if (navigator.clipboard && window.isSecureContext){
+        return navigator.clipboard.writeText(address);
+      }
+      // fallback for non-secure contexts, e.g. opening index.html straight off disk
+      return new Promise((resolve, reject) => {
+        const field = document.createElement('textarea');
+        field.value = address;
+        field.setAttribute('readonly', '');
+        field.style.cssText = 'position:fixed;top:-9999px;opacity:0;';
+        document.body.appendChild(field);
+        field.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(field);
+        ok ? resolve() : reject(new Error('copy refused'));
+      });
+    }
+
+    emailBtn.addEventListener('click', () => {
+      // if a mail client takes over, the window blurs and no confirmation is needed
+      let handedOff = false;
+      const markHandoff = () => { handedOff = true; };
+      window.addEventListener('blur', markHandoff, { once: true });
+
+      copyAddress().then(() => {
+        setTimeout(() => {
+          window.removeEventListener('blur', markHandoff);
+          if (handedOff) return;
+          clearTimeout(restoreTimer);
+          emailBtn.textContent = 'Copied ✓';
+          restoreTimer = setTimeout(() => { emailBtn.textContent = defaultLabel; }, 2600);
+        }, 600);
+      }).catch(() => {
+        window.removeEventListener('blur', markHandoff);
+      });
+    });
+  }
 
   // ---------- Contact tabs ----------
   const GITHUB_USERNAME = 'yatsensei';
