@@ -199,7 +199,9 @@
     border-right:1px solid var(--border);
     margin-right:4px;
   }
-  @media (max-width:640px){
+  /* 7 labelled links no longer fit a tablet viewport, so labels collapse at the
+     same 860px breakpoint the hero and projects grids already use */
+  @media (max-width:860px){
     nav .nav-label{ display:none; }
     nav a{ padding:9px 11px; }
   }
@@ -583,6 +585,8 @@
   .tl-item h3{ font-size:1.2rem; margin-bottom:6px; }
   .tl-item .tl-org{ color:var(--muted); font-size:0.844rem; margin-bottom:10px; font-family:var(--font-mono); }
   .tl-item p{ color:var(--muted); font-size:0.906rem; max-width:60ch; }
+  /* outbound link on a timeline entry, reusing the projects link treatment */
+  .tl-item .project-link{ margin-top:16px; }
 
   /* ============ CONTACT ============ */
   .contact-card{
@@ -720,6 +724,7 @@
   <a href="#about" class="nav-link"><span class="nav-label">About</span></a>
   <a href="#projects" class="nav-link"><span class="nav-label">Projects</span></a>
   <a href="#experience" class="nav-link"><span class="nav-label">Experience</span></a>
+  <a href="#hackathons" class="nav-link"><span class="nav-label">Hackathons</span></a>
   <a href="#education" class="nav-link"><span class="nav-label">Education</span></a>
   <a href="#skills" class="nav-link"><span class="nav-label">Skills</span></a>
   <a href="#contact" class="nav-link"><span class="nav-label">Contact</span></a>
@@ -898,11 +903,46 @@
     </div>
   </section>
 
+  <!-- ============ HACKATHONS ============ -->
+  <section id="hackathons" data-accent="magenta">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow reveal">04 — Hackathons</div>
+        <h2 class="reveal">Built under a deadline</h2>
+      </div>
+      <p class="reveal">Short briefs, tight timelines, working prototypes.</p>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-item" style="--tl-color: var(--magenta);">
+        <div class="tl-year">Clarity</div>
+        <h3>Atlassian × Mistral AI × UNSW AI Society Hackathon</h3>
+        <p>A 24 hour build on how AI can help multidisciplinary teams align on
+        decisions and review work. Clarity resolves design conflicts across
+        fragmented construction project data, pairing Mistral's API with clash
+        mediation, automated RFIs, document summarisation, 3D collision views, and
+        one audit trail covering human and AI output.</p>
+        <a href="https://www.linkedin.com/posts/akein-tsung_hackathon-artificialintelligence-mistralai-ugcPost-7489579016060870656-ld2P/"
+           target="_blank" rel="noopener noreferrer" class="project-link">Read the post ↗</a>
+      </div>
+      <div class="tl-item" style="--tl-color: var(--teal);">
+        <div class="tl-year">NRMA Car Insurance Advisor</div>
+        <h3>IAG Hackathon, UTS Tech Fest</h3>
+        <p>A 48 hour build on improving the NRMA Insurance customer experience. Up
+        to 88% of customers feel covered while only around 25% understand their
+        policy, so the prototype maps personal risk against cover, names the gaps in
+        plain language, simulates a real claim, and benchmarks against a similar
+        driver.</p>
+        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7476868267861647361/"
+           target="_blank" rel="noopener noreferrer" class="project-link">Read the post ↗</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ EDUCATION ============ -->
   <section id="education" data-accent="teal">
     <div class="section-head">
       <div>
-        <div class="eyebrow reveal">04 — Education</div>
+        <div class="eyebrow reveal">05 — Education</div>
         <h2 class="reveal">What I've studied</h2>
       </div>
       <p class="reveal">Degree, standout units, and results worth naming.</p>
@@ -935,7 +975,7 @@
   <section id="skills" data-accent="indigo">
     <div class="section-head">
       <div>
-        <div class="eyebrow reveal">05 — Skills</div>
+        <div class="eyebrow reveal">06 — Skills</div>
         <h2 class="reveal">What I work with</h2>
       </div>
       <p class="reveal">Grouped by how I actually use them, not a wall of logos.</p>
@@ -975,7 +1015,7 @@
   <!-- ============ CONTACT ============ -->
   <section id="contact" data-accent="magenta">
     <div class="contact-card reveal">
-      <div class="eyebrow" style="justify-content:center;">06 — Contact</div>
+      <div class="eyebrow" style="justify-content:center;">07 — Contact</div>
       <h2>Let's talk about what you're building.</h2>
       <p>Open to internships, graduate roles, and interesting problems in general.</p>
 
