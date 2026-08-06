@@ -206,15 +206,15 @@
   }
 
   /* ============ LOGO MARK ============ */
-  /* Height-locked so any replacement file scales to the nav regardless of its
-     own dimensions. Use a transparent PNG or SVG so it sits on the nav's
-     frosted pill rather than carrying its own dark background. */
+  /* Inlined rather than linked as a file so its gradient can read --accent /
+     --accent-2 and recolour with the rest of the page on scroll. Height-locked
+     to the nav; the aspect ratio below must match the SVG's viewBox. */
   .logo-mark{
     height:1.35rem;
-    width:auto;
+    width:calc(1.35rem * 584 / 428);  /* inline SVG has no intrinsic size to scale from */
     display:block;
-    flex:0 0 auto;   /* keep the intrinsic width; as a flex item it otherwise collapses */
-    max-width:none;  /* the global img{max-width:100%} resolves to 0 in this shrink-to-fit parent */
+    flex:0 0 auto;   /* as a flex item it would otherwise collapse */
+    overflow:visible;
   }
   /* 7 labelled links no longer fit a tablet viewport, so labels collapse at the
      same 860px breakpoint the hero and projects grids already use */
@@ -742,7 +742,18 @@
 
 <nav id="siteNav">
   <span class="nav-name">
-    <img class="logo-mark" src="images/logo-yat.png" alt="Akein Tsung">
+    <svg class="logo-mark" viewBox="0 0 584 428" fill="none" role="img"
+         aria-label="Akein Tsung">
+      <defs>
+      <linearGradient id="lg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="var(--accent, #6c5ce7)"/>
+      <stop offset="1" stop-color="var(--accent-2, #00d9c0)"/>
+      </linearGradient>
+      </defs>
+      <path d="M 99.0 62.0 L 485.0 62.0 L 464.2 100.0 L 119.8 100.0 Z M 269.0 100.0 L 315.0 100.0 L 315.0 158.0 L 269.0 158.0 Z" fill="url(#lg)"/>
+      <path d="M 62.6 127.0 L 208.7 394.3 L 292.0 263.2 L 375.3 394.3 L 521.4 127.0 L 474.6 127.0 L 372.7 313.7 L 292.0 186.8 L 211.3 313.7 L 109.4 127.0 Z" fill="#fff"/>
+      <path d="M 267.6 396.0 L 292.0 350.9 L 316.4 396.0 L 359.6 396.0 L 292.0 271.1 L 224.4 396.0 Z" fill="url(#lg)"/>
+    </svg>
   </span>
   <a href="#about" class="nav-link"><span class="nav-label">About</span></a>
   <a href="#projects" class="nav-link"><span class="nav-label">Projects</span></a>
