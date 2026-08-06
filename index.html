@@ -34,7 +34,10 @@
   }
 
   *{ margin:0; padding:0; box-sizing:border-box; }
-  html{ scroll-behavior:smooth; }
+  /* Base type scale. Every font-size below is expressed in rem, so this single
+     value drives the whole scale — change it here, not on individual elements. */
+  html{ scroll-behavior:smooth; font-size:112.5%; }        /* 18px */
+  @media (max-width:480px){ html{ font-size:106.25%; } }   /* 17px on small phones */
 
   @media (prefers-reduced-motion: reduce){
     html{ scroll-behavior:auto; }
@@ -127,7 +130,7 @@
 
   .eyebrow{
     font-family:var(--font-mono);
-    font-size:12.5px;
+    font-size:0.781rem;
     letter-spacing:0.14em;
     text-transform:uppercase;
     color:var(--accent);
@@ -178,7 +181,7 @@
   }
   nav a{
     font-family:var(--font-mono);
-    font-size:12px;
+    font-size:0.75rem;
     letter-spacing:0.04em;
     color:var(--muted);
     padding:9px 16px;
@@ -190,7 +193,7 @@
   nav .nav-name{
     font-family:var(--font-display);
     font-weight:600;
-    font-size:13px;
+    font-size:0.812rem;
     color:var(--text);
     padding:9px 14px 9px 18px;
     border-right:1px solid var(--border);
@@ -254,7 +257,7 @@
   }
   .hero-kicker{
     font-family:var(--font-mono);
-    font-size:13px;
+    font-size:0.812rem;
     color:var(--muted);
     margin-bottom:28px;
     display:flex;
@@ -292,15 +295,15 @@
   .hero-role{
     margin-top:26px;
     font-family:var(--font-mono);
-    font-size:16px;
+    font-size:1rem;
     color:var(--muted);
-    height:24px;
+    min-height:1.75rem;
     display:flex;
     align-items:center;
   }
   .hero-role .cursor{
     display:inline-block;
-    width:2px; height:16px;
+    width:2px; height:1rem;
     background:var(--accent);
     margin-left:3px;
     animation:blink 1s steps(1) infinite;
@@ -310,7 +313,7 @@
   .hero-sub{
     margin-top:30px;
     max-width:56ch;
-    font-size:17px;
+    font-size:1.062rem;
     color:var(--muted);
   }
 
@@ -322,7 +325,7 @@
   }
   .btn{
     font-family:var(--font-mono);
-    font-size:13px;
+    font-size:0.812rem;
     letter-spacing:0.02em;
     padding:14px 26px;
     border-radius:100px;
@@ -349,7 +352,7 @@
     gap:12px;
     color:var(--muted-2);
     font-family:var(--font-mono);
-    font-size:11px;
+    font-size:0.688rem;
     letter-spacing:0.1em;
     text-transform:uppercase;
   }
@@ -372,7 +375,7 @@
     flex-wrap:wrap;
   }
   .section-head h2{ font-size:clamp(1.8rem, 3.4vw, 2.6rem); }
-  .section-head p{ color:var(--muted); max-width:38ch; font-size:14.5px; }
+  .section-head p{ color:var(--muted); max-width:38ch; font-size:0.906rem; }
 
   /* ============ ABOUT ============ */
   .about-grid{
@@ -383,7 +386,7 @@
   }
   @media (max-width:860px){ .about-grid{ grid-template-columns:1fr; gap:40px; } }
 
-  .about-bio p{ font-size:17px; color:var(--muted); margin-bottom:18px; }
+  .about-bio p{ font-size:1.062rem; color:var(--muted); margin-bottom:18px; }
   .about-bio strong{ color:var(--text); font-weight:500; }
 
   .stat-strip{
@@ -408,7 +411,7 @@
   }
   .stat .label{
     margin-top:6px;
-    font-size:12.5px;
+    font-size:0.781rem;
     color:var(--muted);
     font-family:var(--font-mono);
   }
@@ -435,15 +438,15 @@
     display:flex; align-items:center; justify-content:center;
     margin-bottom:20px;
     font-family:var(--font-mono);
-    font-size:13px;
+    font-size:0.812rem;
     background:rgba(var(--cluster-rgb), 0.12);
     color:var(--cluster-color);
   }
-  .cluster h3{ font-size:16px; margin-bottom:14px; }
+  .cluster h3{ font-size:1rem; margin-bottom:14px; }
   .cluster .tags{ display:flex; flex-wrap:wrap; gap:8px; }
   .cluster .tags span{
     font-family:var(--font-mono);
-    font-size:12px;
+    font-size:0.75rem;
     color:var(--muted);
     padding:6px 12px;
     border:1px solid var(--border);
@@ -486,28 +489,50 @@
     transition:transform 0.6s var(--ease);
   }
   .project-visual:hover .glow-blob{ transform:scale(1.08) rotate(6deg); }
+  /* the image fills the 4:3 frame; the glow-blob stays behind it as a fallback backdrop */
+  .project-visual img{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    transition:transform 0.6s var(--ease);
+  }
+  .project-visual:hover img{ transform:scale(1.04); }
+  /* scrim so the corner tag stays legible over any screenshot */
+  .project-visual::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:2;
+    pointer-events:none;
+    background:linear-gradient(to top, rgba(11,14,20,0.75), transparent 45%);
+  }
   .project-visual .visual-tag{
     position:absolute;
+    z-index:3;
     bottom:20px; left:20px;
     font-family:var(--font-mono);
-    font-size:11px;
+    font-size:0.688rem;
     letter-spacing:0.08em;
     text-transform:uppercase;
-    color:rgba(255,255,255,0.55);
+    color:rgba(255,255,255,0.72);
   }
 
   .project-index{
     font-family:var(--font-mono);
-    font-size:12.5px;
+    font-size:0.781rem;
     color:var(--proj-color);
     margin-bottom:14px;
   }
   .project h3{ font-size:1.6rem; margin-bottom:14px; }
-  .project p{ color:var(--muted); font-size:15px; margin-bottom:20px; }
+  .project p{ color:var(--muted); font-size:0.938rem; margin-bottom:20px; }
   .project .stack{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
   .project .stack span{
     font-family:var(--font-mono);
-    font-size:11.5px;
+    font-size:0.719rem;
     color:var(--muted);
     padding:5px 11px;
     border:1px solid var(--border);
@@ -515,7 +540,7 @@
   }
   .project-link{
     font-family:var(--font-mono);
-    font-size:13px;
+    font-size:0.812rem;
     color:var(--text);
     display:inline-flex;
     align-items:center;
@@ -551,13 +576,13 @@
   }
   .tl-year{
     font-family:var(--font-mono);
-    font-size:12.5px;
+    font-size:0.781rem;
     color:var(--tl-color, var(--accent));
     margin-bottom:8px;
   }
   .tl-item h3{ font-size:1.2rem; margin-bottom:6px; }
-  .tl-item .tl-org{ color:var(--muted); font-size:13.5px; margin-bottom:10px; font-family:var(--font-mono); }
-  .tl-item p{ color:var(--muted); font-size:14.5px; max-width:60ch; }
+  .tl-item .tl-org{ color:var(--muted); font-size:0.844rem; margin-bottom:10px; font-family:var(--font-mono); }
+  .tl-item p{ color:var(--muted); font-size:0.906rem; max-width:60ch; }
 
   /* ============ CONTACT ============ */
   .contact-card{
@@ -599,7 +624,7 @@
   }
   .contact-tab{
     font-family:var(--font-mono);
-    font-size:12.5px;
+    font-size:0.781rem;
     letter-spacing:0.03em;
     color:var(--muted);
     background:transparent;
@@ -643,7 +668,7 @@
     display:flex; align-items:center; justify-content:center;
     font-family:var(--font-display);
     font-weight:600;
-    font-size:20px;
+    font-size:1.25rem;
     background:rgba(var(--accent-rgb),0.16);
     color:var(--accent);
     transition:color 0.6s var(--ease), background 0.6s var(--ease);
@@ -651,7 +676,7 @@
   }
   .profile-avatar img{ width:100%; height:100%; object-fit:cover; }
   .profile-info h3{ font-size:1.1rem; margin-bottom:6px; }
-  .profile-info p{ color:var(--muted); font-size:13.5px; margin:0; }
+  .profile-info p{ color:var(--muted); font-size:0.844rem; margin:0; }
   .profile-info .profile-blurb{ margin-top:10px; }
   .profile-cta{ margin-top:6px; }
 
@@ -664,7 +689,7 @@
   }
   .gh-repos a{
     font-family:var(--font-mono);
-    font-size:11.5px;
+    font-size:0.719rem;
     color:var(--text);
     padding:6px 12px;
     border:1px solid var(--border);
@@ -678,7 +703,7 @@
     text-align:center;
     color:var(--muted-2);
     font-family:var(--font-mono);
-    font-size:12px;
+    font-size:0.75rem;
   }
   footer a{ color:var(--muted); border-bottom:1px solid transparent; transition:border-color 0.3s, color 0.3s; }
   footer a:hover{ color:var(--text); border-color:var(--text); }
@@ -710,14 +735,14 @@
           <span class="status-dot"></span>
           Open to graduate & internship roles · 2026
         </div>
-        <h1 class="reveal">Hi, I'm <span class="accent-word">Akein Tsung</span> — an AI undergraduate at UTS.</h1>
+        <h1 class="reveal">Hi, I'm <span class="accent-word">Akein Tsung</span>, an AI undergraduate at UTS.</h1>
         <div class="hero-role reveal reveal-delay-1">
           <span id="roleText">Building end-to-end ML systems</span><span class="cursor"></span>
         </div>
         <p class="hero-sub reveal reveal-delay-2">
           AI student at the University of Technology Sydney, focused on building complete
-          machine learning systems — from data pipelines and model training to deployed
-          APIs and multi-agent applications.
+          machine learning systems that run from data pipelines and model training through
+          to deployed APIs and multi-agent applications.
         </p>
         <div class="hero-actions reveal reveal-delay-3">
           <a href="#projects" class="btn btn-primary">View my work →</a>
@@ -742,14 +767,14 @@
         <p>
           I'm <strong>Akein Tsung</strong>, a Bachelor of Artificial Intelligence student
           at the University of Technology Sydney. I'm less interested in models that work
-          in a notebook and more interested in systems that work end-to-end — the data
-          pipeline, the training run, the API, and everything that has to hold together
-          for a model to actually be useful to someone.
+          in a notebook and more interested in systems that work end-to-end, covering the
+          data pipeline, the training run, the API, and everything else that has to hold
+          together for a model to actually be useful to someone.
         </p>
         <p>
           That mindset carried over from my Diploma of Information Technology at UTS
           College, where I graduated with a <strong>6.6/7.0 GPA</strong> and received the
-          <strong> Gold Medal for Academic Excellence</strong> — consistency and attention
+          <strong> Gold Medal for Academic Excellence</strong>. Consistency and attention
           to detail matter to me as much as ambition does.
         </p>
         <p>
@@ -779,14 +804,17 @@
     <div class="project reveal" style="--proj-color: var(--indigo);">
       <div class="project-visual">
         <div class="glow-blob"></div>
+        <img src="images/project-01-mlops-pipeline.jpg"
+             alt="End-to-End MLOps Pipeline: the FastAPI prediction service and MLflow experiment tracking dashboard"
+             width="1200" height="900" loading="lazy" decoding="async">
         <span class="visual-tag">GITHUB REPOSITORY</span>
       </div>
       <div>
         <div class="project-index">Project 01</div>
         <h3>End-to-End MLOps Pipeline</h3>
         <p>
-          A full machine learning pipeline for real estate price prediction — from raw
-          data ingestion through PostgreSQL and Pandas, to model training with MLflow
+          A full machine learning pipeline for real estate price prediction. It runs from
+          raw data ingestion through PostgreSQL and Pandas, to model training with MLflow
           experiment tracking, to a containerised FastAPI service that serves live
           predictions.
         </p>
@@ -798,6 +826,9 @@
     <div class="project reveal" style="--proj-color: var(--teal);">
       <div class="project-visual">
         <div class="glow-blob"></div>
+        <img src="images/project-02-atliq-rag-chatbot.jpg"
+             alt="AtliQ RAG Chatbot: the Streamlit chat interface answering an internal knowledge base question"
+             width="1200" height="900" loading="lazy" decoding="async">
         <span class="visual-tag">GITHUB REPOSITORY</span>
       </div>
       <div>
@@ -817,6 +848,9 @@
     <div class="project reveal" style="--proj-color: var(--amber);">
       <div class="project-visual">
         <div class="glow-blob"></div>
+        <img src="images/project-03-multi-agent-code-reviewer.jpg"
+             alt="Multi-Agent Code Reviewer: the LangGraph fan-out/fan-in review pipeline and its merged review output"
+             width="1200" height="900" loading="lazy" decoding="async">
         <span class="visual-tag">GITHUB REPOSITORY</span>
       </div>
       <div>
@@ -824,8 +858,8 @@
         <h3>Multi-Agent Code Reviewer</h3>
         <p>
           A stateful, multi-agent orchestration pipeline built with LangGraph. Uses a
-          fan-out/fan-in architecture to run parallel, specialised LLM reviewers —
-          security, performance, and style — against GitHub pull requests, then merges
+          fan-out/fan-in architecture to run parallel, specialised LLM reviewers for
+          security, performance, and style against GitHub pull requests, then merges
           their findings into a single structured review.
         </p>
         <div class="stack"><span>Python</span><span>LangGraph</span><span>LLM orchestration</span></div>
@@ -841,7 +875,7 @@
         <div class="eyebrow reveal">03 — Experience</div>
         <h2 class="reveal">Roles I've held</h2>
       </div>
-      <p class="reveal">Internships, jobs, and other work — in order.</p>
+      <p class="reveal">Internships, jobs, and other work in order.</p>
     </div>
     <div class="timeline reveal">
       <div class="tl-item" style="--tl-color: var(--amber);">
@@ -850,7 +884,16 @@
         <div class="tl-org">University of Technology Sydney</div>
         <p>Helping new and commencing students settle
         into university life, connecting them with peers, staff, and campus resources
-        through structured networking activities.]</p>
+        through structured networking activities.</p>
+      </div>
+      <div class="tl-item" style="--tl-color: var(--indigo);">
+        <div class="tl-year">July 2026 — Present</div>
+        <h3>Outgoing Global Volunteer (oGV) Team Member</h3>
+        <div class="tl-org">AIESEC</div>
+        <p>Supporting AIESEC's outgoing global volunteer program by helping students
+        find and prepare for international volunteering placements. Running candidate
+        outreach and application screening, guiding applicants through the matching
+        process, and contributing to recruitment campaigns and partner engagement.</p>
       </div>
     </div>
   </section>
@@ -895,7 +938,7 @@
         <div class="eyebrow reveal">05 — Skills</div>
         <h2 class="reveal">What I work with</h2>
       </div>
-      <p class="reveal">Grouped by how I actually use them — not a wall of logos.</p>
+      <p class="reveal">Grouped by how I actually use them, not a wall of logos.</p>
     </div>
     <div class="skill-clusters reveal">
       <div class="cluster" style="--cluster-color: var(--indigo); --cluster-rgb: 108,92,231;">
@@ -950,7 +993,7 @@
             <div class="profile-info">
               <h3 id="liName">Akein Tsung</h3>
               <p id="liHeadline">Bachelor of Artificial Intelligence @ UTS</p>
-              <p class="profile-blurb" id="liBlurb">Building end-to-end ML systems — from data pipelines and MLOps to retrieval-augmented generation and multi-agent applications.</p>
+              <p class="profile-blurb" id="liBlurb">Building end-to-end ML systems that span data pipelines and MLOps through to retrieval-augmented generation and multi-agent applications.</p>
             </div>
             <a href="https://www.linkedin.com/in/akein-tsung-04b190335/" target="_blank" rel="noopener" class="btn btn-ghost profile-cta">Open full profile ↗</a>
           </div>
@@ -1124,7 +1167,7 @@
         ).join('');
       }
     }catch(err){
-      headlineEl.textContent = 'Live preview unavailable right now — view the full profile instead.';
+      headlineEl.textContent = 'Live preview unavailable right now. View the full profile instead.';
     }
   }
 
