@@ -210,22 +210,22 @@
      rewrites per section, so the mark recolours as the page moves. The W is
      var(--text) and the canvas is transparent, so it sits on whatever is behind it. */
   .logo-mark{
-    width:1.25rem;
-    height:1.25rem;
+    width:1.5rem;
+    height:1.16rem;   /* the mark is landscape, 100:77 to match the viewBox */
     display:block;
     overflow:visible;
   }
-  .logo-mark .logo-w{
+  .logo-mark .logo-y{
     fill:none;
     stroke:var(--text);
-    stroke-width:11;
+    stroke-width:10;
     stroke-linejoin:miter;
   }
   .logo-mark .logo-t{ fill:url(#logoGrad); }
   .logo-mark .logo-a{
     fill:none;
     stroke:url(#logoGrad);
-    stroke-width:8;
+    stroke-width:8.5;
     stroke-linejoin:miter;
   }
   .logo-stop-a{ stop-color:var(--accent); transition:stop-color 0.8s var(--ease); }
@@ -754,15 +754,15 @@
 
 <nav id="siteNav">
   <span class="nav-name">
-    <svg class="logo-mark" viewBox="0 0 100 100" role="img" aria-label="Akein Tsung">
+    <svg class="logo-mark" viewBox="0 0 100 77" role="img" aria-label="Akein Tsung">
       <title>Akein Tsung</title>
       <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
         <stop class="logo-stop-a" offset="0%"></stop>
         <stop class="logo-stop-b" offset="100%"></stop>
       </linearGradient>
-      <path class="logo-w" d="M6 21 L32 87 L50 42 L68 87 L94 21"></path>
-      <path class="logo-t" d="M13 6 H87 L80 19 H55.5 V34 H44.5 V19 H13 Z"></path>
-      <path class="logo-a" d="M42 88 L50 70 L58 88"></path>
+      <path class="logo-y" d="M7 16 L27 74 L51 26 L75 74 L95 16"></path>
+      <path class="logo-t" d="M14 2 H94 L90 12 H60 V23 H51 V12 H19 Z"></path>
+      <path class="logo-a" d="M40 74 L51 50 L62 74"></path>
     </svg>
   </span>
   <a href="#about" class="nav-link"><span class="nav-label">About</span></a>
