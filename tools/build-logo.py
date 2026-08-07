@@ -191,8 +191,9 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W:.2f} {H:.2f}">
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 open(os.path.join(root, "tools", "logo-at.svg"), "w").write(svg)
 
-# favicon: same letterforms, fitted into a rounded tile
-PAD = 14.0
+# favicon: same letterforms, fitted into a circular tile (needs more padding
+# than a square would — the mark's corners have to clear the curve)
+PAD = 19.0
 k = (100 - 2 * PAD) / W
 ty = (100 - H * k) / 2
 open(os.path.join(root, "favicon.svg"), "w").write(
@@ -204,7 +205,7 @@ open(os.path.join(root, "favicon.svg"), "w").write(
       <stop offset="1" stop-color="#4d9df5"/>
     </linearGradient>
   </defs>
-  <rect width="100" height="100" rx="22" fill="#0b0e14"/>
+  <rect width="100" height="100" rx="50" fill="#0b0e14"/>
   <g transform="translate({PAD:.2f} {ty:.2f}) scale({k:.5f})">
     <path d="{D}" fill="url(#g)"/>
   </g>
