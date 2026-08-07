@@ -5,7 +5,7 @@ I'm a penultimate-year Bachelor of Artificial Intelligence student at the Univer
 
 ## 🚀 What I'm Working On
 
-- 🏎️ **F1 Telemetry Optimizer** — a physics-informed dynamic programming project using real F1 telemetry data to model drag and optimize energy allocation across straights, built with Claude
+- 🏎️ **F1 Telemetry Optimizer** — a physics-informed dynamic programming project using real F1 telemetry data to model drag and optimize battery across a Grand Prix lap
 - 🎓 **Cassistant** — a student dashboard platform with basic Canvas integration
 
 ## 🛠️ Technologies & Tools
