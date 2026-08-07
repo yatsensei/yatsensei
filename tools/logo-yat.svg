@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 289.06 100.00">
-  <defs>
-    <linearGradient id="yatg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="289.06" y2="0">
-      <stop offset="0" stop-color="#6c5ce7"/>
-      <stop offset="1" stop-color="#00d9c0"/>
-    </linearGradient>
-  </defs>
-  <path d="M 23.26 0.00 L 47.63 29.79 L 72.00 0.00 L 95.26 0.00 L 47.63 58.21 L 0.00 0.00 Z M 38.63 44.00 L 56.63 44.00 L 56.63 100.00 L 38.63 100.00 Z M 110.26 100.00 L 156.16 0.00 L 202.06 100.00 L 182.26 100.00 L 156.16 43.15 L 130.06 100.00 Z M 127.70 62.00 L 184.62 62.00 L 184.62 80.00 L 127.70 80.00 Z M 217.06 0.00 L 289.06 0.00 L 289.06 18.00 L 217.06 18.00 Z M 244.06 0.00 L 262.06 0.00 L 262.06 100.00 L 244.06 100.00 Z" fill="url(#yatg)"/>
-</svg>

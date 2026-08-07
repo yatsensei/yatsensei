@@ -1,12 +1,12 @@
-"""Generate the YAT monogram used in the nav, the favicon and the app icons.
+"""Generate the AT monogram used in the nav, the favicon and the app icons.
 
 The letters are described by stroke centrelines plus a width; this offsets each
 centreline into a closed outline so corners come out as true miters and the
 terminals can be cut horizontally (stroking a path would cut them square to the
-stroke instead, which leaves the Y's arms and the A's feet looking sheared).
+stroke instead, which leaves the A's feet looking sheared).
 
 Run from anywhere:  python3 tools/build-logo.py
-Writes tools/logo-yat.svg and rewrites favicon.svg.
+Writes tools/logo-at.svg and rewrites favicon.svg.
 """
 import math
 import os
@@ -14,7 +14,7 @@ import os
 BOX_W, BOX_H = 72.0, 100.0   # nominal per-letter box
 STROKE = 18.0
 HW = STROKE / 2.0
-GAP = 15.0                   # gap between letters, measured on their real extents
+GAP = 7.0                    # minimum optical clearance between letters
 
 
 # --------------------------------------------------------------------------
@@ -78,15 +78,6 @@ def half_thickness(dx, dy, hw):
 # --------------------------------------------------------------------------
 # letters
 # --------------------------------------------------------------------------
-def letter_Y():
-    """Splayed arms meeting a stem, both arms cut flat across the cap line."""
-    junction = 44.0
-    arms = stroke([(0.0, 0.0), (BOX_W / 2, junction), (BOX_W, 0.0)],
-                  cut_start=0.0, cut_end=0.0)
-    stem = rect(BOX_W / 2 - HW, junction, BOX_W / 2 + HW, BOX_H)
-    return [arms, stem]
-
-
 def _apex_for_sharp_tip(dx, base, hw, tip=0.0):
     """Centreline apex whose miter carries the point exactly to y=tip."""
     apex = base / 2
@@ -129,14 +120,44 @@ def shift(groups, dx, dy=0.0):
     return [[(x + dx, y + dy) for x, y in g] for g in groups]
 
 
+def x_span_at(groups, y):
+    """Leftmost and rightmost x where these polygons cross the line y."""
+    xs = []
+    for poly in groups:
+        for a, b in zip(poly, poly[1:] + poly[:1]):
+            if (a[1] - y) * (b[1] - y) <= 0 and a[1] != b[1]:
+                xs.append(a[0] + (b[0] - a[0]) * (y - a[1]) / (b[1] - a[1]))
+    return (min(xs), max(xs)) if xs else None
+
+
+def kern(placed, nxt, gap):
+    """Shift for `nxt` so its closest approach to `placed` is exactly `gap`.
+
+    Butting bounding boxes would measure A's widest point — its foot — and
+    leave the wedge under the T's crossbar reading as a hole. Scanning by row
+    tucks the T in until the real clearance is `gap`.
+    """
+    worst = None
+    for i in range(1, 400):
+        y = BOX_H * i / 400.0
+        lhs, rhs = x_span_at(placed, y), x_span_at(nxt, y)
+        if lhs and rhs:
+            d = lhs[1] - rhs[0]
+            worst = d if worst is None else max(worst, d)
+    if worst is None:                                   # no shared rows
+        worst = bbox(placed)[2] - bbox(nxt)[0]
+    return worst + gap
+
+
 def compose():
-    letters, cursor = [], 0.0
-    for build in (letter_Y, letter_A, letter_T):
+    placed = []
+    for build in (letter_A, letter_T):
         g = build()
-        x0, _, x1, _ = bbox(g)
-        letters.append(shift(g, cursor - x0))       # butt each letter's real edge
-        cursor += (x1 - x0) + GAP
-    flat = [g for L in letters for g in L]
+        g = shift(g, -bbox(g)[0])                       # each letter starts at x=0
+        if placed:
+            g = shift(g, kern([p for L in placed for p in L], g, GAP))
+        placed.append(g)
+    flat = [g for L in placed for g in L]
     x0, y0, x1, y1 = bbox(flat)
     return shift(flat, -x0, -y0), (x1 - x0), (y1 - y0)
 
@@ -147,8 +168,8 @@ def _signed_area(poly):
 
 def to_path(poly):
     # Subpaths of one <path> must all wind the same way, or the nonzero fill
-    # rule subtracts the overlaps instead of unioning them (a stem would punch
-    # a notch out of the arms it joins).
+    # rule subtracts the overlaps instead of unioning them (the T's stem would
+    # punch a notch out of the crossbar it joins).
     if _signed_area(poly) < 0:
         poly = poly[::-1]
     return "M " + " L ".join(f"{x:.2f} {y:.2f}" for x, y in poly) + " Z"
@@ -159,16 +180,16 @@ D = " ".join(to_path(p) for p in shapes)
 
 svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W:.2f} {H:.2f}">
   <defs>
-    <linearGradient id="yatg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="{W:.2f}" y2="0">
+    <linearGradient id="atg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="{W:.2f}" y2="0">
       <stop offset="0" stop-color="#6c5ce7"/>
       <stop offset="1" stop-color="#00d9c0"/>
     </linearGradient>
   </defs>
-  <path d="{D}" fill="url(#yatg)"/>
+  <path d="{D}" fill="url(#atg)"/>
 </svg>'''
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-open(os.path.join(root, "tools", "logo-yat.svg"), "w").write(svg)
+open(os.path.join(root, "tools", "logo-at.svg"), "w").write(svg)
 
 # favicon: same letterforms, fitted into a rounded tile
 PAD = 14.0
