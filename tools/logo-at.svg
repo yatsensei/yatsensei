@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 143.69 100.00">
+  <defs>
+    <linearGradient id="atg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="143.69" y2="0">
+      <stop offset="0" stop-color="#6c5ce7"/>
+      <stop offset="1" stop-color="#00d9c0"/>
+    </linearGradient>
+  </defs>
+  <path d="M 0.00 100.00 L 45.90 0.00 L 91.81 100.00 L 72.00 100.00 L 45.90 43.15 L 19.81 100.00 Z M 17.44 62.00 L 74.36 62.00 L 74.36 80.00 L 17.44 80.00 Z M 71.69 0.00 L 143.69 0.00 L 143.69 18.00 L 71.69 18.00 Z M 98.69 0.00 L 116.69 0.00 L 116.69 100.00 L 98.69 100.00 Z" fill="url(#atg)"/>
+</svg>
