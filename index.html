@@ -562,6 +562,28 @@
     border-radius:100px;
   }
 
+  /* project 04 has no screenshot yet, so the frame holds artwork instead of an
+     image and is a plain div — it opens nothing, so the zoom cursor is reset */
+  .project-visual.is-upcoming{
+    cursor:default;
+    display:grid;
+    place-items:center;
+    background:
+      radial-gradient(120% 90% at 20% 10%, rgba(var(--accent-rgb),0.14), transparent 60%),
+      var(--surface);
+  }
+  .upcoming-art{
+    width:76%;
+    height:auto;
+    position:relative;
+    z-index:2;
+  }
+  .project-link.is-pending{
+    color:var(--muted);
+    border-bottom-style:dashed;
+    cursor:default;
+  }
+
   .project-index{
     font-family:var(--font-mono);
     font-size:0.781rem;
@@ -927,6 +949,44 @@
         </p>
         <div class="stack"><span>Python</span><span>LangGraph</span><span>LLM orchestration</span></div>
         <a href="https://github.com/yatsensei/multi-agent-code-reviewer" target="_blank" rel="noopener" class="project-link">View on GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project reveal" style="--proj-color: var(--magenta);">
+      <div class="project-visual is-upcoming">
+        <div class="glow-blob"></div>
+        <!-- no screenshot yet: a decorative lap with the bright arcs standing in
+             for the stretches where the optimiser chooses to deploy -->
+        <svg class="upcoming-art" viewBox="0 0 600 280" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="trackGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0">
+              <stop offset="0" stop-color="var(--accent, #6c5ce7)"/>
+              <stop offset="1" stop-color="var(--accent-2, #00d9c0)"/>
+            </linearGradient>
+          </defs>
+          <path d="M 60 120 C 60 60 120 40 190 45 C 260 50 300 90 360 90 C 420 90 450 55 500 70
+                   C 545 84 550 140 505 165 C 455 192 380 170 320 185 C 255 200 230 240 170 235
+                   C 100 229 60 180 60 120 Z"
+                stroke="rgba(255,255,255,0.13)" stroke-width="11" stroke-linecap="round"/>
+          <path d="M 60 120 C 60 60 120 40 190 45 C 260 50 300 90 360 90 C 420 90 450 55 500 70
+                   C 545 84 550 140 505 165 C 455 192 380 170 320 185 C 255 200 230 240 170 235
+                   C 100 229 60 180 60 120 Z"
+                stroke="url(#trackGrad)" stroke-width="11" stroke-linecap="round"
+                pathLength="100" stroke-dasharray="17 10 25 13 11 24"/>
+        </svg>
+        <span class="visual-tag">IN DEVELOPMENT</span>
+      </div>
+      <div>
+        <div class="project-index">Project 04</div>
+        <h3>Clipping — F1 Energy Deployment</h3>
+        <p>
+          A physics-informed optimiser for where a 2026 Formula 1 car should spend its
+          battery around a lap. Real telemetry fits the vehicle model, dynamic programming
+          solves for the lap-time-optimal deployment under the regulations' speed taper,
+          and a learned policy generalises that strategy to circuits it has never seen.
+        </p>
+        <div class="stack"><span>Python</span><span>FastF1</span><span>LightGBM</span><span>FastAPI</span><span>Next.js</span></div>
+        <span class="project-link is-pending">Coming soon</span>
       </div>
     </div>
   </section>
