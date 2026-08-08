@@ -229,10 +229,25 @@
   }
   /* the mark recolours with the section accent, on the same curve as the rest */
   .logo-mark stop{ transition:stop-color 0.8s var(--ease); }
-  /* 7 labelled links no longer fit a tablet viewport, so labels collapse at the
-     same 860px breakpoint the hero and projects grids already use */
+  /* 7 labelled links stop fitting around 860px. Hiding the labels emptied the
+     links — each one contains nothing else — leaving seven blank 22px targets,
+     so instead the pill caps its width and scrolls, keeping every label. */
   @media (max-width:860px){
-    nav .nav-label{ display:none; }
+    nav{
+      max-width:calc(100vw - 28px);
+      justify-content:flex-start;
+      overflow-x:auto;
+      overscroll-behavior-x:contain;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;          /* the pill is short; a bar would crowd it */
+      -ms-overflow-style:none;
+    }
+    nav::-webkit-scrollbar{ display:none; }
+    nav a{ padding:9px 13px; flex:0 0 auto; }   /* or flex would squash them */
+    nav .nav-name{ flex:0 0 auto; }
+  }
+  @media (max-width:480px){
+    nav{ top:14px; }
     nav a{ padding:9px 11px; }
   }
 
@@ -745,7 +760,26 @@
   .profile-info h3{ font-size:1.1rem; margin-bottom:6px; }
   .profile-info p{ color:var(--muted); font-size:0.844rem; margin:0; }
   .profile-info .profile-blurb{ margin-top:10px; }
-  .profile-cta{ margin-top:6px; }
+  /* the arrow otherwise orphans onto a line of its own in a narrow card */
+  .profile-cta{ margin-top:6px; white-space:nowrap; }
+
+  /* The card's 56px side padding was fixed at every width, so a 320px screen
+     was left 158px of content — narrower than the tab row needs. Everything
+     here just gives that space back; none of it changes the desktop card. */
+  @media (max-width:768px){
+    .contact-card{ padding:56px 28px; }
+    .profile-card{ padding:28px 22px; }
+  }
+  @media (max-width:480px){
+    .contact-card{ padding:44px 18px; border-radius:20px; }
+    .contact-tab{ padding:10px 16px; }
+    .profile-card{ padding:24px 16px; }
+    /* 26px of side padding each end no longer leaves room for the label */
+    .profile-cta{ padding:14px 16px; }
+  }
+  /* the tab row is inline-flex, so it sized to its content and overflowed
+     rather than fitting the card */
+  .contact-tabs{ max-width:100%; }
 
   .gh-repos{
     display:flex;
@@ -1207,7 +1241,19 @@
         const id = entry.target.id;
         navLinks.forEach(l => l.classList.remove('active'));
         const match = document.querySelector('.nav-link[href="#' + id + '"]');
-        if (match) match.classList.add('active');
+        if (match){
+          match.classList.add('active');
+          // the pill scrolls on narrow screens, so keep the current section
+          // in view — otherwise the later links are never seen
+          const nav = document.getElementById('siteNav');
+          if (nav.scrollWidth > nav.clientWidth + 1){
+            const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            nav.scrollTo({
+              left: match.offsetLeft - (nav.clientWidth - match.offsetWidth) / 2,
+              behavior: smooth ? 'smooth' : 'auto'
+            });
+          }
+        }
       }
     });
   }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
